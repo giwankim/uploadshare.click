@@ -10,8 +10,10 @@ provider:
   runtime: nodejs16.x
   region: ap-northeast-2
   versionFunctions: false
+
   environment:
     BUCKET_NAME: !Ref FileBucket
+    BASE_URL: https://${self:custom.domainName}
 
 custom:
   logRetentionInDays: 7
@@ -19,7 +21,7 @@ custom:
 
 functions:
   createShare:
-    handler: share-handler.handle
+    handler: handlers/share-handler.handle
     events:
       - httpApi:
           method: POST
@@ -27,8 +29,20 @@ functions:
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - s3:GetObject
           - s3:PutObject
+        Resource:
+          - !Sub arn:aws:s3:::${FileBucket}/shares/*
+
+  download:
+    handler: handlers/download-handler.handle
+    events:
+      - httpApi:
+          method: GET
+          path: /{id}
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:GetObject
         Resource:
           - !Sub arn:aws:s3:::${FileBucket}/shares/*
       - Effect: Allow
