@@ -1,4 +1,4 @@
-service: domain
+service: uploadshare-domain
 frameworkVersion: '3'
 
 plugins:
