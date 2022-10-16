@@ -22,7 +22,11 @@ const logger = new Logger()
 const metrics = new Metrics()
 const s3Client = new S3Client()
 
-const getUploadUrl = ({ key, contentDisposition, contentDispositionHeader }) => {
+const getUploadUrl = ({
+  key,
+  contentDisposition,
+  contentDispositionHeader
+}) => {
   const putCommand = new PutObjectCommand({
     Bucket: BUCKET_NAME,
     Key: key,
@@ -41,7 +45,6 @@ const getUploadUrl = ({ key, contentDisposition, contentDispositionHeader }) => 
 async function handler (event, context) {
   const id = randomUUID()
   const key = `shares/${id[0]}/${id[1]}/${id}`
-
   const filename = event?.queryStringParameters?.filename
   const contentDisposition = filename && `attachment; filename="${filename}"`
   const contentDispositionHeader =
@@ -56,7 +59,11 @@ async function handler (event, context) {
   metrics.addMetric('createShare', MetricUnits.Count, 1)
 
   const downloadUrl = `${BASE_URL}/share/${id}`
-  const uploadUrl = await getUploadUrl({ key, contentDisposition, contentDispositionHeader })
+  const uploadUrl = await getUploadUrl({
+    key,
+    contentDisposition,
+    contentDispositionHeader
+  })
 
   let body = `
   Upload with: curl -X PUT -T ${filename || '<FILENAME>'} ${
@@ -70,7 +77,7 @@ async function handler (event, context) {
   if (event.preferredMediaType === 'application/json') {
     body = JSON.stringify({
       filename,
-      headers: [contentDispositionHeader],
+      headers: { 'content-disposition': contentDisposition },
       uploadUrl,
       downloadUrl
     })

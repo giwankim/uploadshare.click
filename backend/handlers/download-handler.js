@@ -20,10 +20,8 @@ const s3Client = new S3Client()
 
 async function handler (event, context) {
   const id = event.pathParameters.id
-
   const key = `shares/${id[0]}/${id[1]}/${id}`
   const getCommand = new GetObjectCommand({ Bucket: BUCKET_NAME, Key: key })
-
   const downloadUrl = await getSignedUrl(s3Client, getCommand, {
     expiresIn: EXPIRY_DEFAULT
   })
