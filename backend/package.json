@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "serverless": "^3.32.2",
+    "serverless-plugin-log-retention": "^2.0.0"
+  }
 }
