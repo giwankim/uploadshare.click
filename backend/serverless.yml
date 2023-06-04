@@ -1,10 +1,6 @@
 service: uploadshare-backend
 frameworkVersion: "3"
 
-plugins:
-  - serverless-plugin-log-retention
-  - serverless-iam-roles-per-function
-
 provider:
   name: aws
   runtime: nodejs18.x
@@ -13,6 +9,10 @@ provider:
   versionFunctions: false
   environment:
     BUCKET_NAME: !Ref FileBucket
+
+plugins:
+  - serverless-plugin-log-retention
+  - serverless-iam-roles-per-function
 
 custom:
   logRetentionInDays: 7

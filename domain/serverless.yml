@@ -1,0 +1,46 @@
+service: uploadshare-domain
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: ap-northeast-2
+  versionFunctions: false
+
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-plugin-log-retention
+
+custom:
+  logRetentionInDays: 7
+  domainName: uploadshare.click
+
+resources:
+  Resources:
+    PublicHostedZone:
+      Type: AWS::Route53::HostedZone
+      Properties:
+        Name: ${self:custom.domainName}
+
+    DomainCert:
+      Type: AWS::CertificateManager::Certificate
+      Properties:
+        DomainName: ${self:custom.domainName}
+        ValidationMethod: DNS
+        DomainValidationOptions:
+          - DomainName: ${self:custom.domainName}
+            HostedZoneId: !Ref PublicHostedZone
+
+  Outputs:
+    DomainCertArn:
+      Description: ARN of the domain root certificates
+      Value: !Ref DomainCert
+      Export:
+        Name: domain-cert-${sls:stage}
+
+    PublicHostedZone:
+      Description: HostedZone for the domain
+      Value: !Ref PublicHostedZone
+      Export:
+        Name: public-hosted-zone-${sls:stage}
