@@ -3,6 +3,7 @@ frameworkVersion: "3"
 
 plugins:
   - serverless-plugin-log-retention
+  - serverless-iam-roles-per-function
 
 provider:
   name: aws
@@ -10,13 +11,31 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ap-northeast-2
   versionFunctions: false
+  environment:
+    BUCKET_NAME: !Ref FileBucket
 
 custom:
   logRetentionInDays: 7
 
-# functions:
-#   hello:
-#     handler: handler.hello
+functions:
+  createShare:
+    handler: share-handler.handleEvent
+    events:
+      - httpApi:
+          method: POST
+          path: '/'
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+          - s3:PutObject
+        Resource:
+          - !Sub "arn:aws:s3:::${FileBucket}/shares/*"
+      - Effect: Allow
+        Action:
+          - s3:ListBucket
+        Resource:
+          - !Sub "arn:aws:s3:::${FileBucket}"
 
 resources:
   Resources:
