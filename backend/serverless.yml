@@ -7,9 +7,14 @@ provider:
   stage: ${opt:stage, 'dev'}
   region: ap-northeast-2
   versionFunctions: false
+  tracing:
+    apiGateway: true
+    lambda: true
   environment:
     BUCKET_NAME: !Ref FileBucket
     BASE_URL: https://${self:custom.domainName}
+    POWERTOOLS_SERVICE_NAME: uploadshare
+    POWERTOOLS_METRICS_NAMESPACE: uploadshare
 
 plugins:
   - serverless-plugin-log-retention
