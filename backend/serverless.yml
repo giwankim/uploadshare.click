@@ -9,6 +9,7 @@ provider:
   versionFunctions: false
   environment:
     BUCKET_NAME: !Ref FileBucket
+    BASE_URL: https://${self:custom.domainName}
 
 plugins:
   - serverless-plugin-log-retention
@@ -24,11 +25,10 @@ functions:
     events:
       - httpApi:
           method: POST
-          path: '/'
+          path: "/"
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - s3:GetObject
           - s3:PutObject
         Resource:
           - !Sub "arn:aws:s3:::${FileBucket}/shares/*"
@@ -37,6 +37,19 @@ functions:
           - s3:ListBucket
         Resource:
           - !Sub "arn:aws:s3:::${FileBucket}"
+
+  download:
+    handler: download.handleEvent
+    events:
+      - httpApi:
+          method: GET
+          path: "/{id}"
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+        Resource:
+          - !Sub "arn:aws:s3:::${FileBucket}/shares/*"
 
 resources:
   Resources:
@@ -67,7 +80,7 @@ resources:
       Type: AWS::ApiGatewayV2::ApiMapping
       Properties:
         ApiId: !Ref HttpApi
-        ApiMappingKey: 'share'
+        ApiMappingKey: "share"
         DomainName: !Ref CustomDomain
         Stage: !Ref HttpApiStage
 
