@@ -1,16 +1,16 @@
 service: uploadshare-domain
 frameworkVersion: "3"
 
+plugins:
+  - serverless-iam-roles-per-function
+  - serverless-plugin-log-retention
+
 provider:
   name: aws
   runtime: nodejs18.x
   stage: ${opt:stage, 'dev'}
   region: ap-northeast-2
   versionFunctions: false
-
-plugins:
-  - serverless-iam-roles-per-function
-  - serverless-plugin-log-retention
 
 custom:
   logRetentionInDays: 7

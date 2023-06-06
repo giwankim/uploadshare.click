@@ -1,6 +1,10 @@
 service: uploadshare-backend
 frameworkVersion: "3"
 
+plugins:
+  - serverless-plugin-log-retention
+  - serverless-iam-roles-per-function
+
 provider:
   name: aws
   runtime: nodejs18.x
@@ -16,9 +20,9 @@ provider:
     POWERTOOLS_SERVICE_NAME: uploadshare
     POWERTOOLS_METRICS_NAMESPACE: uploadshare
 
-plugins:
-  - serverless-plugin-log-retention
-  - serverless-iam-roles-per-function
+package:
+  patterns:
+    - '!test/**'
 
 custom:
   logRetentionInDays: 7

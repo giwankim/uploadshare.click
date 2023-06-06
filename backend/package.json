@@ -5,15 +5,19 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS='--loader=esmock --no-warnings' c8 tap --no-coverage --coverage-map=test/coverage-map.cjs test/**/*.test.js"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "c8": "^7.14.0",
+    "esmock": "^2.3.1",
     "serverless": "^3.32.2",
     "serverless-iam-roles-per-function": "^3.2.0",
-    "serverless-plugin-log-retention": "^2.0.0"
+    "serverless-plugin-log-retention": "^2.0.0",
+    "sinon": "^15.1.0",
+    "tap": "^16.3.6"
   },
   "dependencies": {
     "@aws-lambda-powertools/logger": "^1.8.0",
@@ -24,6 +28,7 @@
     "@middy/core": "^4.5.0",
     "@middy/http-content-negotiation": "^4.5.0",
     "@middy/http-header-normalizer": "^4.5.0",
-    "http-status": "^1.6.2"
+    "http-status": "^1.6.2",
+    "sanitize-filename": "^1.6.3"
   }
 }
