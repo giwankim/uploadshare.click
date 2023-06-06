@@ -57,14 +57,17 @@ Upload with: curl -X PUT -T ${filename || '<FILENAME>'} ${contentDispositionHead
 Download with curl: curl ${downloadUrl}
 `
   if (event.preferredMediaType === 'application/json') {
-    body = JSON.stringify({ filename, headers: [contentDispositionHeader], uploadUrl, downloadUrl })
+    body = JSON.stringify({
+      filename,
+      headers: { 'content-disposition': contentDisposition },
+      uploadUrl,
+      downloadUrl
+    })
     headers = { 'content-type': 'application/json' }
   }
 
   return {
-    statusCode: httpStatus.CREATED,
-    headers,
-    body
+    statusCode: httpStatus.CREATED, headers, body
   }
 }
 
