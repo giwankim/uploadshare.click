@@ -1,6 +1,6 @@
-const { createHash } = require('crypto')
+const {createHash} = require('node:crypto')
 
-module.exports = async function ({ options, resolveVariable }) {
+module.exports = async function ({options, resolveVariable}) {
   const account = await resolveVariable('aws:accountId')
   const region = await resolveVariable('aws:region')
   const stage = await resolveVariable('sls:stage')
