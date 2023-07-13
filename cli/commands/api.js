@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import { request } from 'undici'
 import httpStatus from 'http-status'
 
-const BASE_URL = 'https://uploadshare.click/share/'
+const BASE_URL = 'https://files.uploadshare.click/share/'
 
 const HTTP_METHOD = {
   POST (headers, body) {
