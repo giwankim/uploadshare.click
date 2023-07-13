@@ -1,20 +1,15 @@
-service: uploadshare-domain
+service: ${file(../config.cjs):config.serviceName}-domain
 frameworkVersion: "3"
-
-plugins:
-  - serverless-iam-roles-per-function
-  - serverless-plugin-log-retention
 
 provider:
   name: aws
   runtime: nodejs18.x
-  stage: ${opt:stage, 'dev'}
-  region: ap-northeast-2
   versionFunctions: false
+  stage: ${file(../config.cjs):config.stage}
+  region: ${file(../config.cjs):config.region}
 
 custom:
-  logRetentionInDays: 7
-  domainName: uploadshare.click
+  domainName: ${file(../config.cjs):config.domain}
 
 resources:
   Resources:

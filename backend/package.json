@@ -20,14 +20,14 @@
     "tap": "^16.3.7"
   },
   "dependencies": {
-    "@aws-lambda-powertools/logger": "^1.10.0",
-    "@aws-lambda-powertools/metrics": "^1.10.0",
-    "@aws-lambda-powertools/tracer": "^1.10.0",
-    "@aws-sdk/client-s3": "^3.360.0",
-    "@aws-sdk/s3-request-presigner": "^3.360.0",
-    "@middy/core": "^4.5.2",
-    "@middy/http-content-negotiation": "^4.5.2",
-    "@middy/http-header-normalizer": "^4.5.2",
+    "@aws-lambda-powertools/logger": "^1.11.1",
+    "@aws-lambda-powertools/metrics": "^1.11.1",
+    "@aws-lambda-powertools/tracer": "^1.11.1",
+    "@aws-sdk/client-s3": "^3.369.0",
+    "@aws-sdk/s3-request-presigner": "^3.369.0",
+    "@middy/core": "^4.5.5",
+    "@middy/http-content-negotiation": "^4.5.5",
+    "@middy/http-header-normalizer": "^4.5.5",
     "http-status": "^1.6.2",
     "sanitize-filename": "^1.6.3"
   }

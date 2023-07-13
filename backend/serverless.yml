@@ -1,4 +1,4 @@
-service: uploadshare-backend
+service: ${file(../config.cjs):config.serviceName}-backend
 frameworkVersion: "3"
 
 plugins:
@@ -8,8 +8,8 @@ plugins:
 provider:
   name: aws
   runtime: nodejs18.x
-  stage: ${opt:stage, 'dev'}
-  region: ap-northeast-2
+  stage: ${file(../config.cjs):config.stage}
+  region: ${file(../config.cjs):config.region}
   versionFunctions: false
   tracing:
     apiGateway: true
@@ -17,16 +17,17 @@ provider:
   environment:
     BUCKET_NAME: !Ref FileBucket
     BASE_URL: https://${self:custom.domainName}
-    POWERTOOLS_SERVICE_NAME: uploadshare
-    POWERTOOLS_METRICS_NAMESPACE: uploadshare
+    POWERTOOLS_SERVICE_NAME: ${self:custom.serviceName}
+    POWERTOOLS_METRICS_NAMESPACE: ${self:custom.serviceName}
 
 package:
   patterns:
     - '!test/**'
 
 custom:
+  serviceName: ${file(../config.cjs):config.serviceName}
+  domainName: ${file(../config.cjs):config.domain}
   logRetentionInDays: 7
-  domainName: uploadshare.click
 
 functions:
   createShare:
