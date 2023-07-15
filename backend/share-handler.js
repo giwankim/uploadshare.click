@@ -17,6 +17,7 @@ const MIME_TYPE = 'application/octet-stream'
 const tracer = new Tracer()
 const logger = new Logger()
 const metrics = new Metrics()
+
 const s3Client = new S3Client()
 
 async function handler (event, context) {

@@ -1,6 +1,7 @@
-import fs from 'node:fs'
+import { createReadStream } from 'node:fs'
+import { stat } from 'node:fs/promises'
 import { request } from 'undici'
-import httpStatus from 'http-status'
+import { CREATED, OK } from 'http-status'
 
 const BASE_URL = 'https://files.uploadshare.click/share/'
 
@@ -24,10 +25,10 @@ export const UploadshareApi = {
 
     const headers = {
       accept: 'application/json',
-      'user-agent': 'uploadshare.click cli'
+      'user-agent': 'files.uploadshare.click cli'
     }
     const response = await request(url, HTTP_METHOD.POST(headers))
-    if (response.statusCode !== httpStatus.CREATED) {
+    if (response.statusCode !== CREATED) {
       const responseText = await response.body.text()
       throw new Error(`Unexpected status code received from server: ${response.statusCode}\n\n${responseText}`)
     }
@@ -37,14 +38,14 @@ export const UploadshareApi = {
 
 export const S3Api = {
   async upload (url, headers, filepath) {
-    const { size } = await fs.promises.stat(filepath)
-    const fileStream = fs.createReadStream(filepath)
+    const { size } = await stat(filepath)
+    const fileStream = createReadStream(filepath)
     const response = await request(url, HTTP_METHOD.PUT({
       'content-type': 'application/octet-stream',
       'content-length': size,
       ...headers
     }, fileStream))
-    if (response.statusCode !== httpStatus.OK) {
+    if (response.statusCode !== OK) {
       const responseText = await response.body.text()
       throw new Error(`Unexpected status code received from S3: ${response.statusCode}\n\n${responseText}`)
     }
