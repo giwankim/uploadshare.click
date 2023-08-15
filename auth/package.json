@@ -19,14 +19,13 @@
     "@aws-lambda-powertools/logger": "^1.12.1",
     "@aws-lambda-powertools/metrics": "^1.12.1",
     "@aws-lambda-powertools/tracer": "^1.12.1",
-    "@aws-sdk/client-dynamodb": "^3.388.0",
-    "@aws-sdk/lib-dynamodb": "^3.388.0",
+    "@aws-sdk/client-dynamodb": "^3.391.0",
+    "@aws-sdk/lib-dynamodb": "^3.391.0",
     "@middy/core": "^4.6.0",
     "@middy/http-header-normalizer": "^4.6.0",
     "@middy/http-response-serializer": "^4.6.0",
     "@middy/http-urlencode-body-parser": "^4.6.0",
     "crypto-random-string": "^5.0.0",
-    "http-status": "^1.6.2",
     "undici": "^5.23.0"
   }
 }

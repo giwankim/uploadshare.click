@@ -16,9 +16,9 @@ provider:
     lambda: true
   environment:
     LOG_LEVEL: debug
-    TABLE_NAME: !Ref Table
     POWERTOOLS_SERVICE_NAME: auth
     POWERTOOLS_METRICS_NAMESPACE: auth
+    TABLE_NAME: !Ref Table
     CLIENT_ID: !Ref UserPoolClient
     BASE_URL: https://${self:custom.domainName}
     USER_POOL_DOMAIN: ${self:custom.userPoolDomain}

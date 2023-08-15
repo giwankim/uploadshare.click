@@ -7,3 +7,13 @@ export function htmlResponse (statusCode, text) {
     }
   }
 }
+
+export function jsonResponse (statusCode, object) {
+  return {
+    statusCode,
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify(object)
+  }
+}

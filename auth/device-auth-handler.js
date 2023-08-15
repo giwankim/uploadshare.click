@@ -1,13 +1,13 @@
+import middy from '@middy/core'
+import cryptoRandomString from 'crypto-random-string'
 import { captureLambdaHandler, Tracer } from '@aws-lambda-powertools/tracer'
 import { injectLambdaContext, Logger } from '@aws-lambda-powertools/logger'
 import { logMetrics, Metrics, MetricUnits } from '@aws-lambda-powertools/metrics'
-import middy from '@middy/core'
-import cryptoRandomString from 'crypto-random-string'
 import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb'
-import httpStatus from 'http-status'
 import { CODE_EXPIRY_SECONDS, TABLE_NAME, TOKEN_REQUEST_INTERVAL_SECONDS, VERIFICATION_URI } from './config.js'
 import { DeviceAuthStatus } from './constants.js'
+import { jsonResponse } from './util.js'
 
 const tracer = new Tracer()
 const logger = new Logger()
@@ -59,13 +59,7 @@ async function handler (event) {
     interval: TOKEN_REQUEST_INTERVAL_SECONDS
   }
 
-  return {
-    statusCode: httpStatus.OK,
-    headers: {
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify(deviceAuthResponsePayload)
-  }
+  return jsonResponse(200, deviceAuthResponsePayload)
 }
 
 export const handleEvent = middy(handler)

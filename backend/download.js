@@ -1,7 +1,6 @@
-import httpStatus from 'http-status'
+import middy from '@middy/core'
 import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import middy from '@middy/core'
 import { captureLambdaHandler, Tracer } from '@aws-lambda-powertools/tracer'
 import { injectLambdaContext, Logger } from '@aws-lambda-powertools/logger'
 import { logMetrics, Metrics, MetricUnits } from '@aws-lambda-powertools/metrics'
@@ -27,11 +26,11 @@ async function handler (event, context) {
   const downloadUrl = await getSignedUrl(s3Client, getObjectCommand, { expiresIn: EXPIRY_DEFAULT })
 
   logger.info('Downloading share', { id, key })
-  metrics.addMetric('downloadShare', MetricUnits.Count, 1)
+  metrics.addMetric('DownloadShareCount', MetricUnits.Count, 1)
 
   // return an HTTP redirect response to the presigned URL
   return {
-    statusCode: httpStatus.MOVED_PERMANENTLY,
+    statusCode: 301,
     headers: {
       Location: downloadUrl
     }

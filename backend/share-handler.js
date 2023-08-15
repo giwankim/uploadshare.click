@@ -1,14 +1,13 @@
-import { randomUUID } from 'node:crypto'
-import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
-import httpStatus from 'http-status'
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
-import { captureLambdaHandler, Tracer } from '@aws-lambda-powertools/tracer'
-import { injectLambdaContext, Logger } from '@aws-lambda-powertools/logger'
-import { logMetrics, Metrics, MetricUnits } from '@aws-lambda-powertools/metrics'
 import middy from '@middy/core'
 import httpHeaderNormalizer from '@middy/http-header-normalizer'
 import httpContentNegotiation from '@middy/http-content-negotiation'
 import sanitizeFilename from 'sanitize-filename'
+import { randomUUID } from 'node:crypto'
+import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { captureLambdaHandler, Tracer } from '@aws-lambda-powertools/tracer'
+import { injectLambdaContext, Logger } from '@aws-lambda-powertools/logger'
+import { logMetrics, Metrics, MetricUnits } from '@aws-lambda-powertools/metrics'
 
 const { BUCKET_NAME, BASE_URL } = process.env
 const EXPIRY_DEFAULT = 24 * 60 * 60
@@ -42,7 +41,7 @@ async function handler (event, context) {
   const contentDispositionHeader = contentDisposition && `content-disposition: ${contentDisposition}`
 
   logger.info('Creating share', { id, key, filename, contentDispositionHeader })
-  metrics.addMetric('createShare', MetricUnits.Count, 1)
+  metrics.addMetric('CreateShareCount', MetricUnits.Count, 1)
 
   // Create the download URL
   const downloadUrl = `${BASE_URL}/share/${id}`
@@ -81,7 +80,7 @@ Download with curl: curl ${downloadUrl}
   }
 
   return {
-    statusCode: httpStatus.CREATED, headers, body
+    statusCode: 201, headers, body
   }
 }
 
