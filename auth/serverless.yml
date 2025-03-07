@@ -22,6 +22,7 @@ provider:
     CLIENT_ID: !Ref UserPoolClient
     BASE_URL: https://${self:custom.domainName}
     USER_POOL_DOMAIN: ${self:custom.userPoolDomain}
+    SERVICE_NAME: ${self:custom.serviceName}
 
 custom:
   serviceName: ${file(../config.cjs):config.serviceName}

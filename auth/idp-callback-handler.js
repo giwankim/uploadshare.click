@@ -19,8 +19,9 @@ const docClient = DynamoDBDocument.from(ddbClient)
  * RFC6749 OAuth 2.0 Authorization Code Grant callback (redirection endpoint) handler
  * https://www.rfc-editor.org/rfc/rfc6749#section-3.1.2
  *
- * @param {*} event Lambda HTTP API Event
- * @param {*} context Lambda Context Object
+ * @param event Lambda HTTP API Event
+ * @param context Lambda Context Object
+ * @return {Promise<{headers: {"content-type": string}, body: string, statusCode: *}>}
  */
 async function handler (event, context) {
   const { code, state, error, error_description: errorDescription } = event.queryStringParameters

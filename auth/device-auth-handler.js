@@ -16,6 +16,11 @@ const metrics = new Metrics()
 const ddbClient = new DynamoDBClient()
 const docClient = DynamoDBDocument.from(ddbClient)
 
+/**
+ *
+ * @param event
+ * @return {Promise<{headers: {"content-type": string}, body: *|string, statusCode: *}>}
+ */
 async function handler (event) {
   // Create a device code (high entropy)
   const deviceCode = cryptoRandomString({ length: 48, type: 'url-safe' })
