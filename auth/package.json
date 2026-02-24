@@ -11,7 +11,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "serverless": "^3.34.0",
+    "serverless": "^4.33.0",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-plugin-log-retention": "^2.0.0"
   },
@@ -24,8 +24,8 @@
     "@middy/core": "^4.6.0",
     "@middy/http-header-normalizer": "^4.6.0",
     "@middy/http-response-serializer": "^4.6.0",
-    "@middy/http-urlencode-body-parser": "^4.6.0",
+    "@middy/http-urlencode-body-parser": "^7.1.1",
     "crypto-random-string": "^5.0.0",
-    "undici": "^5.23.0"
+    "undici": "^6.23.0"
   }
 }

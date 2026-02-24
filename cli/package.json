@@ -17,6 +17,6 @@
   "dependencies": {
     "commander": "^11.0.0",
     "http-status": "^1.6.2",
-    "undici": "^5.23.0"
+    "undici": "^6.23.0"
   }
 }
