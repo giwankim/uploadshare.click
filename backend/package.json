@@ -13,7 +13,7 @@
   "devDependencies": {
     "c8": "^8.0.1",
     "esmock": "^2.3.6",
-    "serverless": "^3.34.0",
+    "serverless": "^4.33.0",
     "serverless-iam-roles-per-function": "^3.2.0",
     "serverless-plugin-log-retention": "^2.0.0",
     "sinon": "^15.2.0",
